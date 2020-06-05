@@ -1,0 +1,12 @@
+export ENABLE_CONTRIB=1
+pip install cmake
+sudo apt-get install qt5-default
+
+Edit the setup.py:
+>> 9: cmake_args.append("-DWITH_QT=4")
+Change to:
+>> 9: cmake_args.append("-DWITH_QT=5")
+after line 127 add the following line:
+>> "-DOPENCV_ENABLE_NONFREE:BOOL=ON"
+
+python setup.py install
