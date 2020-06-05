@@ -6,5 +6,5 @@ dataset = [
     "example_dataset/img3.jpg",
 ]
 
-model = BOVW(n_clusters=10)
+model = BOVW(n_clusters=10, max_feature_cnt=10)
 model.train(dataset)

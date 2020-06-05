@@ -118,18 +118,22 @@ class BOVW:
                 img = cv2.imread(p, 0)
                 kp, des = feature_extractor.detectAndCompute(img, None)
                 if self.feature_per_image > -1 and len(des) > self.feature_per_image:
-                    des = np.random.choice(des, self.feature_per_image, replace=False)
+                    idx = np.random.choice(
+                        len(des), self.feature_per_image, replace=False
+                    )
+                    des = des[idx]
                 features += list(des)
             except Exception as e:
                 warning_text = "Failed to extract features for file {0} due to: {1}"
                 logging.warning(warning_text.format(p, e))
-
+        features = np.array(features)
         # TRAIN FAST KNN ON THE EXTRACTED FEATURES.
         if self.n_clusters == -1:
             self.n_clusters = int(math.sqrt(len(features)))
 
         if self.max_feature_cnt > -1 and self.max_feature_cnt < len(features):
-            features = np.random.choice(features, self.max_feature_cnt, replace=False)
+            idx = np.random.choice(len(features), self.max_feature_cnt, replace=False)
+            features = features[idx]
 
         logging.info("Training K-means with {} features".format(len(features)))
         self.model = KMeans(
