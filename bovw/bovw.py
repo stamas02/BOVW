@@ -2,11 +2,10 @@ import logging
 import math
 import os
 
+import cv2
 import numpy as np
 from sklearn.cluster import KMeans
 from tqdm import tqdm
-
-import cv2
 
 
 class BOVW:
@@ -172,6 +171,6 @@ class BOVW:
 
         _, features = feature_extractor.detectAndCompute(image, None)
 
-        descriptors = self.model.predict(features)
+        descriptors = self.model.predict(np.array([features]))
         hist, bin_edges = np.histogram(descriptors, bins=np.arange(self.n_clusters))
         return hist
