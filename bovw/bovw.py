@@ -171,6 +171,6 @@ class BOVW:
 
         _, features = feature_extractor.detectAndCompute(image, None)
 
-        descriptors = self.model.predict(np.array([features]))
+        descriptors = self.model.predict(features)
         hist, bin_edges = np.histogram(descriptors, bins=np.arange(self.n_clusters))
         return hist
