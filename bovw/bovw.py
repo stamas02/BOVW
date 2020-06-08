@@ -167,7 +167,8 @@ class BOVW:
             )
 
         if len(image.shape) == 3:
-            image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+            if image.shape[3] > 1:
+                image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
         _, features = feature_extractor.detectAndCompute(image, None)
 
